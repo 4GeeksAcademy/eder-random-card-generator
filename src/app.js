@@ -2,9 +2,6 @@
 import "bootstrap";
 import "./style.css";
 
-import "./assets/img/rigo-baby.jpg";
-import "./assets/img/4geeks.ico";
-
 const cardType = ["♥", "♠", "♣", "♦"];
 const cardStyle = ["hearts", "spades", "clovers", "diamonds"];
 const cardValue = [
@@ -22,12 +19,21 @@ const cardValue = [
   "Q",
   "K"
 ];
+const cardMod = document.querySelectorAll(".my-card");
+const cardModNumber = document.getElementById("value");
+let randomType = 0;
+let randomValue = 0;
 
-function getRandom(type, value) {
-  const cardMod = document.querySelectorAll(".my-card");
-  const cardModNumber = document.getElementById("value");
-  let randomType = Math.floor(Math.random() * type.length);
-  let randomValue = Math.floor(Math.random() * value.length);
+function generateRandom() {
+  cardMod.forEach(element => {
+    element.classList.remove(cardStyle[randomType]);
+  });
+  randomType = Math.floor(Math.random() * cardType.length);
+  randomValue = Math.floor(Math.random() * cardValue.length);
+}
+
+function getRandom() {
+  generateRandom();
   cardMod.forEach(element => {
     element.innerHTML = cardType[randomType];
     element.classList.add(cardStyle[randomType]);
@@ -35,6 +41,15 @@ function getRandom(type, value) {
   cardModNumber.innerHTML = cardValue[randomValue];
 }
 
+const button = document.getElementById("button-event");
+button.addEventListener("click", function() {
+  getRandom();
+});
+
+//const forceNewCard = () => getRandom(cardType, cardValue);
+
 window.onload = function() {
-  getRandom(cardType, cardValue);
+  getRandom();
 };
+
+//export default forceNewCard;
